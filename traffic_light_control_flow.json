@@ -1,6 +1,6 @@
 [
     {
-        "id": "5ad7e7597c8119d1",
+        "id": "b358ac4e098d4b49",
         "type": "tab",
         "label": "Traffic Lights",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "8d8b4a7b46f19204",
+        "id": "3ac0526fa152f688",
         "type": "rpi-gpio in",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "",
         "pin": "21",
         "intype": "up",
@@ -21,14 +21,14 @@
         "y": 520,
         "wires": [
             [
-                "88b19bf050c33d44"
+                "f6b957613799c663"
             ]
         ]
     },
     {
-        "id": "88b19bf050c33d44",
+        "id": "f6b957613799c663",
         "type": "switch",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -46,14 +46,14 @@
         "y": 520,
         "wires": [
             [
-                "eed1ec355c3cf458"
+                "7d074548f9a893a2"
             ]
         ]
     },
     {
-        "id": "aa72183ddd6099cf",
+        "id": "80ccd09f3e6df004",
         "type": "inject",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "",
         "props": [
             {
@@ -68,18 +68,18 @@
         "payload": "1",
         "payloadType": "num",
         "x": 130,
-        "y": 200,
+        "y": 160,
         "wires": [
             [
-                "2a365a9c0b54da7c"
+                "3a9fbe32f6ba24aa"
             ]
         ]
     },
     {
-        "id": "a8e92d9be60ad571",
+        "id": "da681a2ff3ae3657",
         "type": "switch",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Check which light",
         "property": "topic",
         "propertyType": "msg",
         "rules": [
@@ -97,91 +97,55 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 610,
-        "y": 200,
+        "x": 1170,
+        "y": 160,
         "wires": [
             [
-                "c0049d8c453579fe",
-                "69f6b34c17a8af5c"
+                "fdaca87a82bf768a",
+                "adad1d0b060af7ec"
             ],
             [
-                "0ae7b67bc29ca664",
-                "614b00a96132c534",
-                "facae24b71306ad5"
+                "4a6b94df5455e1c0",
+                "b39b764842b1db82",
+                "d1f02a17a262e73f"
             ]
         ]
     },
     {
-        "id": "c0049d8c453579fe",
+        "id": "fdaca87a82bf768a",
         "type": "rpi-gpio out",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Green LED",
         "pin": "2",
         "set": true,
         "level": "0",
         "freq": "",
         "out": "out",
         "bcm": true,
-        "x": 980,
-        "y": 160,
+        "x": 1510,
+        "y": 120,
         "wires": []
     },
     {
-        "id": "0ae7b67bc29ca664",
+        "id": "4a6b94df5455e1c0",
         "type": "rpi-gpio out",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Red LED",
         "pin": "3",
         "set": true,
         "level": "0",
         "freq": "",
         "out": "out",
         "bcm": true,
-        "x": 980,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "2a365a9c0b54da7c",
-        "type": "function",
-        "z": "5ad7e7597c8119d1",
-        "name": "Calculate the active light",
-        "func": "let current_light_index = flow.get(\"current_light_index\");\n\nif(flow.get(\"walk_button_state\") === 1 && current_light_index === 0) {\n    current_light_index = 1;\n    flow.set(\"walk_button_state\", 0);\n}\nelse if(current_light_index === 1) {\n    current_light_index = 0;\n}\n\nflow.set(\"current_light_index\", current_light_index);\n\nmsg.topic = \"lights/\" + flow.get(\"lights\")[current_light_index];\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"lights\", [\"green\", \"red\"]);\nflow.set(\"current_light_index\", 0);",
-        "finalize": "",
-        "libs": [],
-        "x": 370,
+        "x": 1500,
         "y": 200,
-        "wires": [
-            [
-                "a8e92d9be60ad571"
-            ]
-        ]
+        "wires": []
     },
     {
-        "id": "eed1ec355c3cf458",
-        "type": "function",
-        "z": "5ad7e7597c8119d1",
-        "name": "There is a walk button press",
-        "func": "flow.set(\"walk_button_state\", 1);\nmsg.payload = {\n    eventType: \"walk-button-pressed\",\n    eventOccurred: new Date()\n}\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1020,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "69f6b34c17a8af5c",
+        "id": "adad1d0b060af7ec",
         "type": "change",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Switch off",
         "rules": [
             {
                 "t": "set",
@@ -196,19 +160,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 100,
+        "x": 1320,
+        "y": 60,
         "wires": [
             [
-                "d640f8802e9acf83"
+                "ba55ee1dc4011711"
             ]
         ]
     },
     {
-        "id": "614b00a96132c534",
+        "id": "b39b764842b1db82",
         "type": "change",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Switch off",
         "rules": [
             {
                 "t": "set",
@@ -223,48 +187,48 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 340,
+        "x": 1340,
+        "y": 280,
         "wires": [
             [
-                "39a1224e642e1869"
+                "60341ffd428ff259"
             ]
         ]
     },
     {
-        "id": "d640f8802e9acf83",
+        "id": "ba55ee1dc4011711",
         "type": "rpi-gpio out",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Red LED",
         "pin": "3",
         "set": false,
         "level": "0",
         "freq": "",
         "out": "out",
         "bcm": true,
-        "x": 970,
-        "y": 100,
+        "x": 1500,
+        "y": 60,
         "wires": []
     },
     {
-        "id": "39a1224e642e1869",
+        "id": "60341ffd428ff259",
         "type": "rpi-gpio out",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Green LED",
         "pin": "2",
         "set": false,
         "level": "0",
         "freq": "",
         "out": "out",
         "bcm": true,
-        "x": 970,
-        "y": 340,
+        "x": 1510,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "5bf209fd8796f68c",
+        "id": "6259ac1b7dcf3ec9",
         "type": "change",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "",
         "rules": [
             {
@@ -284,30 +248,30 @@
         "y": 700,
         "wires": [
             [
-                "88b19bf050c33d44"
+                "f6b957613799c663"
             ]
         ]
     },
     {
-        "id": "acc58b1d45c6b05d",
+        "id": "8444a44a67bd97f9",
         "type": "Azure Service Bus - Receive Topic Message",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Receive Topic Message",
-        "topic": "",
-        "subscription": "",
-        "connectionString": "",
+        "topic": "raspi.local/trafficlightcontrol/v1",
+        "subscription": "traffic-light-control-flow",
+        "connectionString": "Endpoint=sb://myraspberrypi.servicebus.windows.net/;SharedAccessKeyName=power-automate-listen;SharedAccessKey=3BIzHRTpfGW6k9riCnvcpynDoas8TFPngMVaiFXukto=",
         "x": 160,
         "y": 960,
         "wires": [
             [
-                "0edf4be585e5595a"
+                "8f2c23b3516b12ad"
             ]
         ]
     },
     {
-        "id": "0edf4be585e5595a",
+        "id": "8f2c23b3516b12ad",
         "type": "switch",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "",
         "property": "payload.eventType",
         "propertyType": "jsonata",
@@ -330,18 +294,18 @@
         "y": 960,
         "wires": [
             [
-                "5bf209fd8796f68c",
-                "897177a4e0414341"
+                "6259ac1b7dcf3ec9",
+                "d2477f8d3a7b876a"
             ],
             [
-                "ae0a304b116733a4"
+                "e94c236cfc5f27f1"
             ]
         ]
     },
     {
-        "id": "1d1d2b0d10e0c343",
+        "id": "1522a42c4284e9e8",
         "type": "comment",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Primary Processing Section",
         "info": "This section performs the principal processing and decision making for the traffic lights",
         "x": 180,
@@ -349,9 +313,9 @@
         "wires": []
     },
     {
-        "id": "666b678f0532ea86",
+        "id": "de388e56edf719cd",
         "type": "comment",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Hardware Button Handling",
         "info": "This section handles the hardware button press",
         "x": 170,
@@ -359,9 +323,9 @@
         "wires": []
     },
     {
-        "id": "311d25d7397b7eeb",
+        "id": "6c35202e989f2278",
         "type": "comment",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Azure Service Bus Message Handling",
         "info": "Handles messages received from Azure Service Bus for triggering walk button press",
         "x": 210,
@@ -369,21 +333,21 @@
         "wires": []
     },
     {
-        "id": "19f504d72e296672",
+        "id": "b55d4daea3fc30fc",
         "type": "Azure Service Bus - Send Topic Message",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Send Red Light Status",
-        "topic": "",
-        "connectionString": "",
-        "x": 1020,
-        "y": 420,
+        "topic": "raspi.local/trafficlightcontrol/v1",
+        "connectionString": "Endpoint=sb://myraspberrypi.servicebus.windows.net/;SharedAccessKeyName=power-automate-listen;SharedAccessKey=3BIzHRTpfGW6k9riCnvcpynDoas8TFPngMVaiFXukto=",
+        "x": 1540,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "facae24b71306ad5",
+        "id": "d1f02a17a262e73f",
         "type": "change",
-        "z": "5ad7e7597c8119d1",
-        "name": "",
+        "z": "b358ac4e098d4b49",
+        "name": "Calculate message to send",
         "rules": [
             {
                 "t": "set",
@@ -405,18 +369,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 420,
+        "x": 1260,
+        "y": 360,
         "wires": [
             [
-                "19f504d72e296672"
+                "b55d4daea3fc30fc"
             ]
         ]
     },
     {
-        "id": "897177a4e0414341",
+        "id": "d2477f8d3a7b876a",
         "type": "debug",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Output notification received message",
         "active": true,
         "tosidebar": true,
@@ -431,9 +395,9 @@
         "wires": []
     },
     {
-        "id": "ae0a304b116733a4",
+        "id": "e94c236cfc5f27f1",
         "type": "debug",
-        "z": "5ad7e7597c8119d1",
+        "z": "b358ac4e098d4b49",
         "name": "Output red light switch on",
         "active": true,
         "tosidebar": true,
@@ -446,5 +410,191 @@
         "x": 750,
         "y": 1040,
         "wires": []
+    },
+    {
+        "id": "3a9fbe32f6ba24aa",
+        "type": "switch",
+        "z": "b358ac4e098d4b49",
+        "name": "Check the current light state",
+        "property": "true",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "$flowContext(\"walk_button_state\") = 1 and $flowContext(\"current_light\") = 0",
+                "vt": "jsonata"
+            },
+            {
+                "t": "eq",
+                "v": "$flowContext(\"current_light\") = 1",
+                "vt": "jsonata"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "2402b50cda86feb7"
+            ],
+            [
+                "3e73941154e68c90"
+            ],
+            [
+                "4e586c1f26b006e7"
+            ]
+        ]
+    },
+    {
+        "id": "2402b50cda86feb7",
+        "type": "change",
+        "z": "b358ac4e098d4b49",
+        "name": "Update light state to show \"red\"",
+        "rules": [
+            {
+                "t": "set",
+                "p": "current_light",
+                "pt": "flow",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "walk_button_state",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 100,
+        "wires": [
+            [
+                "3184b88876f76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "3e73941154e68c90",
+        "type": "change",
+        "z": "b358ac4e098d4b49",
+        "name": "Switch back to green",
+        "rules": [
+            {
+                "t": "set",
+                "p": "current_light",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 160,
+        "wires": [
+            [
+                "3184b88876f76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "4e586c1f26b006e7",
+        "type": "change",
+        "z": "b358ac4e098d4b49",
+        "name": "Initialise globals",
+        "rules": [
+            {
+                "t": "set",
+                "p": "current_light",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "lights",
+                "pt": "flow",
+                "to": "[\"green\", \"red\"]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "3184b88876f76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "3184b88876f76dc7",
+        "type": "change",
+        "z": "b358ac4e098d4b49",
+        "name": "Calculate light to show",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "\"lights/\" & $flowContext(\"lights\")[$flowContext(\"current_light\")]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "da681a2ff3ae3657"
+            ]
+        ]
+    },
+    {
+        "id": "7d074548f9a893a2",
+        "type": "change",
+        "z": "b358ac4e098d4b49",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "walk_button_state",
+                "pt": "flow",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1110,
+        "y": 640,
+        "wires": [
+            []
+        ]
     }
 ]
